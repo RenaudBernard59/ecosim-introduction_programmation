@@ -6,10 +6,10 @@
 ################################################
 
 #Installation de la bibliothèque 'string'
-install.packages("string")
+install.packages("stringr")
 
 #Appel de la bibliothèque 'string'
-library(string)
+library(stringr)
 
 #Test de la fonction
 browseURL("http://ecosim.chcariou.fr/Cours_programmation")
