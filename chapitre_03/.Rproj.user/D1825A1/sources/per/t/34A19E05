@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1578237620708.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4111503277",
+    "id" : "34A19E05",
+    "lastKnownWriteTime" : 1578237666,
+    "last_content_update" : 1578237666389,
+    "path" : "~/for work/Programmation/ecosim-introduction_programmation/chapitre_03/chapitre_03_renaud_bernard.R",
+    "project_path" : "chapitre_03_renaud_bernard.R",
+    "properties" : {
+        "cursorPosition" : "21,0",
+        "scrollLine" : "2",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
