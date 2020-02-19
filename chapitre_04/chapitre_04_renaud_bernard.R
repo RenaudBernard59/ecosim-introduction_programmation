@@ -9,9 +9,8 @@ maTable <- read.csv2("table_exercice.csv",stringsAsFactors = FALSE)
 head(maTable) # Importation de la table et vérification si OK
 
 ### Q1 - Créer un tableau avec les lignes paires uniquement ?
-tableauPaire <- data.frame(seq(2,20,2))
+tableauPaire <- maTable[seq(2,nrow(maTable),2),]
 tableauPaire
-
 
 ### Q2 - Combien de films d'animation japonaise ?
 nrow(maTable[maTable$genre%in%c("Animation", "Animation 3D") & maTable$pays=="Japon",])
@@ -34,17 +33,22 @@ pourcentageTitreEgal
 
 ### Q6 - Quel est le titre et le titre original du film suivant :
 ## le film est une reprise et le titre original diffère du nom français du film ?
-titresDifferents <-
-estReprise <- maTable[]
-maTable[!is.na(maTable$titre_original) & maTable$reprise==TRUE,]$titre
-
+maTable[!is.na(maTable$titre_original) & maTable$reprise==TRUE,c("titre", "titre_original")]
 
 ### Q7 - Quel est le nombre d'entrées du plus gros documentaire français ?
 # Indications : créer une table, ordonner la table, focaliser sur la première ligne.
-
-
+lesDocumentaires <- maTable[maTable$genre=="Documentaire",]
+lesDocumentaires
+docuTrilles <- lesDocumentaires[order(lesDocumentaires$entrees, decreasing=TRUE),]
+docuTrilles
+plusgrosDocu <- docuTrilles[sample(1),]$entrees
+plusgrosDocu
 ### Q8 - Combien de films font plus d'entrées que ce documentaire ?
+nrow(maTable[maTable$entrees>plusgrosDocu,])
 
 ### Q9 - Combien de films non documentaires font moins d'entrées que ce documentaire ?
+nrow(maTable[maTable$entrees<plusgrosDocu & maTable$genre!="Documentaire",])
 
 ### Q10 - Créer un tableau de 10 lignes prises au hasard entre le rang 100 et 200 !
+randomTable <- maTable[sample(100:200,10),]
+randomTable
