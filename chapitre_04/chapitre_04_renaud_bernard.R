@@ -19,7 +19,7 @@ nrow(maTable[maTable$genre%in%c("Animation", "Animation 3D") & maTable$pays=="Ja
 nrow(maTable[maTable$pays%in%c("Chine", "Inde"),])
 
 ### Q4 - Combien de films sont des comédies ?
-nrow(maTable[maTable$genre=="Comédie",])
+nrow(maTable[maTable$genre%in%c("Comédie", "Comédie dramatique"),])
 
 ### Q5 - Quel est le pourcentage de films dont le titre français est le titre original ?
 nombreTotalFilm <-nrow(maTable)
@@ -52,3 +52,4 @@ nrow(maTable[maTable$entrees<plusgrosDocu & maTable$genre!="Documentaire",])
 ### Q10 - Créer un tableau de 10 lignes prises au hasard entre le rang 100 et 200 !
 randomTable <- maTable[sample(100:200,10),]
 randomTable
+
