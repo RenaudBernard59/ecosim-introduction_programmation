@@ -7,10 +7,10 @@
 options(encoding ="UTF-8")
 maTable <- read.csv2("table_exercice.csv",stringsAsFactors = FALSE)
 head(maTable) # Importation de la table et vérification si OK
-
+library(dplyr) # Appel library
 # Q1 - Construire une table qui ne contient ni les films d'animation ni les documentaires. 
-
-
+newTable <- maTable
+head(newTable)
 
 # Les questions suivantes devront être réalisées sur la table construite en Q1.
 
