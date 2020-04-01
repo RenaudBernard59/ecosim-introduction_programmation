@@ -5,6 +5,11 @@
 #Renaud BERNARD - R version 3.6.1 (2019-07-05)
 ############################################################
 
+options(encoding ="UTF-8")
+maTable <- read.csv2("table_exercice.csv",stringsAsFactors = FALSE)
+head(maTable) # Importation de la table et vérification si OK
+library(stringr) # Appel library
+  
 ### Les librairies et les données
 ################################################
 # Q1 - Nous allons travailler sur la table suivante :
@@ -14,7 +19,14 @@
 ## Ecrivez la ou les lignes de commande permettant d'obtenir cette nouvelle table.
 ## Quelles sont ses dimensions ?
 ########################
+'%notin%'<-Negate('%in%') #Création d'un négateur de %IN%
 
+tableQ1 <- maTable[maTable$reprise==FALSE & maTable$entrees>20000 & maTable$genre %notin% c('Documentaire'),]
+head(tableQ1)
+tableQ1$reprise <- NULL #Suppression des reprises
+head(tableQ1)
+tableQ1$rang <- NULL #Suppression des rangs
+head(tableQ1)
 
 
 ################################################
