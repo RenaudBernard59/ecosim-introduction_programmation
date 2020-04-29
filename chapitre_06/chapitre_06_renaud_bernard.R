@@ -21,13 +21,15 @@ library(stringr) # Appel library
 ########################
 '%notin%'<-Negate('%in%') #Création d'un négateur de %IN%
 
+nrow(maTable) #Regarder le nombre total de ligne de la table originale
+
 tableQ1 <- maTable[maTable$reprise==FALSE & maTable$entrees>20000 & maTable$genre %notin% c('Documentaire'),]
 head(tableQ1)
 tableQ1$reprise <- NULL #Suppression des reprises
 head(tableQ1)
 tableQ1$rang <- NULL #Suppression des rangs
 head(tableQ1)
-
+nrow(tableQ1)
 
 ################################################
 # Q2 - (Sur la table construite en Q1) Deux types d'erreur
@@ -38,8 +40,33 @@ head(tableQ1)
 ## Vous allez corriger dans l'ordre chacune de ces deux erreurs (sans créer de nouvelles colonnes).
 ## Combien de films ont le même titre ?
 ########################
+##Nettoyage
+tableQ2bis <- tableQ1[!is.na(tableQ1$titre_original),]
+head(tableQ2bis)
+
+tableQ2bis$titre_original <- str_trim(tableQ2bis$titre_original) #Enlever espaces début & fin string
+tableQ2bis$titre_original <- tolower(tableQ2bis$titre_original) #Mettre tout les titres originaux en minuscule
+tableQ2bis$titre <-tolower(tableQ2bis$titre) #Mettre tout les titres en minuscule pour faire nos tests
 
 
+head(tableQ2bis$titre) #Vérification titre Lowercase
+head(tableQ2bis$titre_original) #Vérification titre_original Lowercase
+
+##Comptage
+nrow(tableQ2bis[tableQ2bis$titre == tableQ2bis$titre_original,])
+tableQ2bis[tableQ2bis$titre == tableQ2bis$titre_original,] # affichage de la liste
+
+##Vrais modifications
+tableQ2 <- tableQ1
+nrow(tableQ2[is.na(tableQ2$titre_original),]) 
+###Supprmier mauvais espaces
+tableQ2$titre_original <- str_trim(tableQ2$titre_original)
+###Supprmier Problèmes Maj
+tableQ2[!is.na(tableQ2$titre_original) & tolower(tableQ2$titre)==tolower(tableQ2$titre_original),]$titre_original <- NA
+###Vérification finale
+nrow(tableQ2[is.na(tableQ2$titre_original),]) 
+
+######[VIDEO CORRECTION C06c 22:30]
 
 ################################################
 # Q3 - (Sur la table corrigée en Q2) Nous n'avons pas besoin du titre original
@@ -48,6 +75,8 @@ head(tableQ1)
 ## elle prendra la valeur TRUE lorsque titre_original vaut NA et la valeur FALSE sinon.
 ## Une fois cela fait, nous créons une nouvelle table sans la colonne titre_original.
 ########################
+
+#tableQ3 <- tableQ2
 
 
 
