@@ -9,6 +9,7 @@ options(encoding ="UTF-8")
 maTable <- read.csv2("table_exercice.csv",stringsAsFactors = FALSE)
 head(maTable) # Importation de la table et vérification si OK
 library(stringr) # Appel library
+library(dplyr) # Appel library
   
 ### Les librairies et les données
 ################################################
@@ -76,10 +77,19 @@ nrow(tableQ2[is.na(tableQ2$titre_original),])
 ## Une fois cela fait, nous créons une nouvelle table sans la colonne titre_original.
 ########################
 
-#tableQ3 <- tableQ2
-
-
-
+#Ajout nouvelles colonnes
+tableQ3 <- tableQ2
+head(tableQ3)
+## Ajout colonne défaut
+tableQ3$titre_fr <- FALSE
+head(tableQ3)
+## Remplissage colonne titre_fr if TRUE
+tableQ3[is.na(tableQ3$titre_original),]$titre_fr <- TRUE
+head(tableQ3)
+## Nouvelle table
+tableQ3bis <- tableQ3[,-3]
+head(tableQ3bis)  
+  
 ################################################
 # Q4 - (Sur la table construite en Q3) Est-il stratégique de traduire le titre d'un film ?
 ## Pour répondre à cette question, nous devons d'abord nous concentrer sur les films non français ;
@@ -87,7 +97,16 @@ nrow(tableQ2[is.na(tableQ2$titre_original),])
 ## la moyenne et la médiane des entrées pour les titres traduits et non traduits. Réponse ?
 ########################
 
-
+# Sélection de tout les films étrangers
+tableQ4 <- tableQ3bis[tableQ3bis$pays!="France",]
+head(tableQ4)
+# Résumé général
+summary(tableQ4)
+summary(tableQ4$titre_fr)
+# Nombre de titre - Moyenne - Médiane
+nrow(tableQ4)
+mean(tableQ4$titre_fr)
+median(tableQ4$titre_fr)
 
 ################################################
 # Q5 - (Sur la table construite en Q3) Est-ce intéressant de refaire une nouvelle version d'un film ?
@@ -98,6 +117,14 @@ nrow(tableQ2[is.na(tableQ2$titre_original),])
 ## des entrées pour les films rebootés vs non rebootés. Réponse ?
 ########################
 
+# Copie de la table
+tableQ5 <- tableQ3bis
+# Création de la nouvelle colonne valanyt FALSE par défaut
+tableQ5$reboot <- FALSE
+head(tableQ5)
+# On remplie TRUE si le titre comporte '(2019)' 
+tableQ5[str_detect(tableQ5$titre, fixed("(2019)")),]$reboot <- TRUE
+head(tableQ5)
 
 
 ################################################
@@ -107,7 +134,14 @@ nrow(tableQ2[is.na(tableQ2$titre_original),])
 ## du film ayant réalisé le plus d'entrées.
 ########################
 
+tableQ6 <- tableQ5
+# Suppression du ' 3D' pour ne garder que 'Animation'
+tableQ6$genre <- str_remove(tableQ6$genre, " 3D")
+# Vérification si OK
+sort(unique(tableQ6$genre))
 
+# Calcul Statistiques
+summarise(group_by(tableQ6, genre), films_nb=n(), titre_max=first(titre, order_by=entrees), nationalite_max=first(pays, order_by=entrees))
 
 ################################################
 # Q7 - Exporter la table corrigée en Q5 avec les colonnes dans l'ordre suivante :
@@ -115,4 +149,13 @@ nrow(tableQ2[is.na(tableQ2$titre_original),])
 ## La table sera nommée 07_table_exercice.csv.
 ########################
 
+tableQ7 <-tableQ5
+# Création fichier
+fichier_export <-  "chapitre_06_renaud_bernard.csv"
+# Ecriture du fichier
+write.table(tableQ7, file= fichier_export, sep=";", row.names=FALSE)
+# Vérification
+read.table(fichier_export, sep=";", header=TRUE, encoding="UTF-8", stringsAsFactors=FALSE)
+
+## FIN
 
